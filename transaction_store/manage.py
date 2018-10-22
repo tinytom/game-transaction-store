@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from database.models import metadata
 from flask.cli import AppGroup
 from app import app
 from app import engine
+import click
 
 database = AppGroup('db')
 conn = engine.connect()
@@ -14,11 +16,6 @@ def create_tables():
 
 @database.command('drop')
 def drop_tables():
-    metadata.drop_all(engine)
-
-
-@database.command('reinit')
-def recreate_db():
     if 'postgresql' in str(conn.engine.url):
         # postgres DROP ALL CASCADE
         tables = conn.execute(
@@ -31,7 +28,12 @@ def recreate_db():
     else:
         metadata.drop_all(engine)
 
-    metadata.create_all(engine)
+
+@database.command('reinit')
+@click.pass_context
+def recreate_db(ctx):
+    ctx.invoke(drop_tables)
+    ctx.invoke(create_tables)
 
 
 if __name__ == '__main__':
