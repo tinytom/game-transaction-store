@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from endpoints import Transaction
 from app import app, api
 
