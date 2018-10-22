@@ -1,4 +1,4 @@
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.types import DateTime
 import traceback
 
@@ -20,21 +20,27 @@ def check_add_new_round(db_conn, round_id, game_id):
     except IntegrityError:
         pass
 
+    return True
+
 
 def add_action(db_conn, data):
-    result = db_conn.execute(
-        "INSERT INTO actions (round_id, stamp, type, amount) VALUES "
-        "( {round_id}, '{stamp}', '{type}', {amount} )".format_map(data)
-    )
+    try:
+        result = db_conn.execute(
+            "INSERT INTO actions (round_id, stamp, type, amount) VALUES "
+            "( {round_id}, '{stamp}', '{type}', {amount} )".format_map(data)
+        )
+    except DataError:
+        return False
+
     return True
 
 
 def insert_tables(db_conn, data):
-    # data['stamp'] = DateTime(data['stamp'])
     states = [check_add_new_game(db_conn, data['game_id']),
               check_add_new_round(db_conn, data['round_id'], data['game_id']),
               add_action(db_conn, data)]
     if all(states):
         return True
     else:
+        # logger.error(states)
         return False

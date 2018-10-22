@@ -26,7 +26,11 @@ class Transaction(Resource):
 
         data = request.json
         data.update({'type': action})
+
+        db_trans = db_conn.begin()
         if insert_tables(db_conn, data):
+            db_trans.commit()
             return data
         else:
+            db_trans.rollback()
             return {'error': 'Unable to process new data.'}, 500
