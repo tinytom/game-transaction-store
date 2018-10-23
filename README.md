@@ -1,7 +1,7 @@
 # game-transaction-store
 
 - python3.6
-- Init db by `manage.py db init`
+- Init db by `manage.py db create`
 - Start from `run.py`
 - wsgi not included
 
