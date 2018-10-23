@@ -26,7 +26,7 @@ class EpTransaction(Resource):
         data = request.json
 
         try:
-            yourdate = dateutil.parser.parse(data['stamp'])
+            dateutil.parser.parse(data['stamp'])
         except Exception as exc:
             return {'error': 'Unknown stamp format.'}
 
