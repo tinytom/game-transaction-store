@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_restplus import Api
-from config import DevelopmentConfig
 from sqlalchemy import create_engine
+
+from config import DevelopmentConfig
 
 
 def configure_app():

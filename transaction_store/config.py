@@ -1,5 +1,6 @@
 class Config:
     DEBUG = False
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = False
 
 
 class DevelopmentConfig(Config):
@@ -11,4 +12,5 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     ERROR_404_HELP = False
+
     # TOKEN = ...

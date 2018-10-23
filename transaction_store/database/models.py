@@ -4,7 +4,7 @@ from sqlalchemy import (Column, DateTime, ForeignKey, Integer, MetaData,
 metadata = MetaData()
 
 games_table = Table('games', metadata,
-                    Column('id', String, primary_key=True, unique=True)
+                    Column('id', Integer, primary_key=True, unique=True)
                     )
 rounds_table = Table('rounds', metadata,
                      Column('id', Integer, primary_key=True, unique=True),

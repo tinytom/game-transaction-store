@@ -37,5 +37,6 @@ def recreate_db(ctx):
 
 
 if __name__ == '__main__':
+    # python manage.py db
     app.cli.add_command(database)
     app.cli()

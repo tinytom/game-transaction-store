@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from endpoints import Transaction
-from app import app, api
+from app import api, app
+from endpoints import EpTransaction
 
-api.add_resource(Transaction, '/api/slot/transactions/<action>')
+api.add_resource(EpTransaction, '/api/slot/transactions/<action>')
 # api.add_resource(TransactionWin, '/api/store/win')
 
 if __name__ == '__main__':
