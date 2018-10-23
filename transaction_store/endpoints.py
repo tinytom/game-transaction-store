@@ -23,15 +23,16 @@ class EpTransaction(Resource):
             return {'error':
                     'Wrong action url parameter. Can be only win or bet.'}, 400
 
-        data = request.json
+        req_data = request.json
+        req_data.update({'type': action})
 
+        valid_data = dict(req_data)
         try:
-            dateutil.parser.parse(data['stamp'])
-        except Exception as exc:
-            return {'error': 'Unknown stamp format.'}
+            valid_data['stamp'] = dateutil.parser.parse(req_data['stamp'])
+        except Exception:
+            return {'error': 'Unknown stamp format.'}, 400
 
-        data.update({'type': action})
-        if insert_tables(db_conn, data):
-            return data
+        if insert_tables(db_conn, valid_data):
+            return req_data
         else:
             return {'error': 'Unable to process new data.'}, 500
